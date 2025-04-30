@@ -35,11 +35,11 @@ export default async (request: Request, context: Context) => {
     });
   }
   const validPaths = ['api.groq.com', 'generativelanguage.googleapis.com'];
-  const url = new URL(pathname, "https://generativelanguage.googleapis.com");
+  // const url = new URL(pathname, "https://generativelanguage.googleapis.com");
   if (validPaths.some(path => pathname.includes(path))) {
     const targetUrl = `https://${pathname}${searchParams}`;
     const headers = pickHeaders(request.headers, ["content-type", "authorization", "x-goog-api-client", "x-goog-api-key", "accept-encoding"]);
-    const response = await fetch(url, {
+    const response = await fetch(targetUrl, {
     body: request.body,
     method: request.method,
     headers,
