@@ -104,8 +104,8 @@ const targetUrl = `https://${pathname}${queryString}`;
 
     const responseHeaders = new Headers(response.headers);
     responseHeaders.set('Referrer-Policy', 'no-referrer');
-    responseHeaders.set('X-RateLimit-Remaining', `${30 - rateLimiter.requests}`);
-    responseHeaders.set('X-TokenLimit-Remaining', `${6000 - rateLimiter.tokens}`);
+    // responseHeaders.set('X-RateLimit-Remaining', `${30 - rateLimiter.requests}`);
+    // responseHeaders.set('X-TokenLimit-Remaining', `${6000 - rateLimiter.tokens}`);
 
     const processedResponse = await processResponse(response);
 
