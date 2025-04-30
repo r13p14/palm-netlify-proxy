@@ -40,17 +40,17 @@ const queryString = url.search; // 包含 ? 和查询参数的部分，如果没
   const validPaths = ['api.groq.com', 'generativelanguage.googleapis.com'];
   // pathname.includes('api.groq.com')
   if (validPaths.some(path => pathname.includes(path))) {
-    resetCountersIfNeeded();
+    // resetCountersIfNeeded();
 
-    if (rateLimiter.requests >= 120) {
-      return new Response('Rate limit exceeded. Max 120 requests per minute.', {
-        status: 429,
-        headers: {
-          'Retry-After': '60',
-          'Content-Type': 'application/json'
-        }
-      });
-    }
+    // if (rateLimiter.requests >= 120) {
+    //   return new Response('Rate limit exceeded. Max 120 requests per minute.', {
+    //     status: 429,
+    //     headers: {
+    //       'Retry-After': '60',
+    //       'Content-Type': 'application/json'
+    //     }
+    //   });
+    // }
 
     if (request.body != null){
       try {
