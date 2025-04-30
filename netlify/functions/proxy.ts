@@ -18,7 +18,25 @@ const CORS_HEADERS: Record<string, string> = {
     "access-control-allow-methods": "*",
     "access-control-allow-headers": "*",
 };
+async function processResponse(response: Response): Promise<Response> {
+  const contentType = response.headers.get('content-type');
+  if (contentType?.includes('application/json')) {
+    const jsonData = await response.json();
+    
+    if (jsonData.choices && jsonData.choices[0]?.message?.content) {
+      const content = jsonData.choices[0].message.content;
+      const processedContent = content.replace(/<think>.*?<\/think>\s*/s, '').trim();
+      jsonData.choices[0].message.content = processedContent;
+    }
 
+    return new Response(JSON.stringify(jsonData), {
+      status: response.status,
+      headers: response.headers
+    });
+  }
+  
+  return response;
+}
 export default async (request: Request, context: Context) => {
     // console.log(request.headers)
   const url = new URL(request.url);
