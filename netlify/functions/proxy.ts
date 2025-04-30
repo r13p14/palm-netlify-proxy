@@ -116,7 +116,8 @@ const targetUrl = `https://${pathname}${queryString}`;
     const response = await fetch(targetUrl, {
       method: request.method,
       headers: headers,
-      body: request.body
+      body: request.body,
+      duplex: "half",
     });
     // console.log(response)
 
