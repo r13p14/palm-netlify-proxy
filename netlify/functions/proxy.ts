@@ -56,19 +56,19 @@ const queryString = url.search; // 包含 ? 和查询参数的部分，如果没
       try {
       const bodyClone = request.clone();
       const body = await bodyClone.json();
-      const estimatedTokens = estimateTokens(body);
+      // const estimatedTokens = estimateTokens(body);
 
-      if (rateLimiter.tokens + estimatedTokens > 60000) {
-        return new Response('Token limit exceeded. Max 60000 tokens per minute.', {
-          status: 429,
-          headers: {
-            'Retry-After': '60',
-            'Content-Type': 'application/json'
-          }
-        });
-      }
+      // if (rateLimiter.tokens + estimatedTokens > 60000) {
+      //   return new Response('Token limit exceeded. Max 60000 tokens per minute.', {
+      //     status: 429,
+      //     headers: {
+      //       'Retry-After': '60',
+      //       'Content-Type': 'application/json'
+      //     }
+      //   });
+      // }
 
-      rateLimiter.tokens += estimatedTokens;
+      // rateLimiter.tokens += estimatedTokens;
     } catch (error) {
       console.error('Error parsing request body:', error);
     }
@@ -76,7 +76,7 @@ const queryString = url.search; // 包含 ? 和查询参数的部分，如果没
 
     
 
-    rateLimiter.requests++;
+    // rateLimiter.requests++;
     //const targetUrl = `https://${pathname}`;
 
 
