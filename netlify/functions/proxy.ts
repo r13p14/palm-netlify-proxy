@@ -37,7 +37,8 @@ export default async (request: Request, context: Context) => {
     // const validPaths = ['api.groq.com', 'generativelanguage.googleapis.com'];
     // const url = new URL(pathname, "https://generativelanguage.googleapis.com");
     // if (validPaths.some(path => pathname.includes(path))) {
-    const targetUrl = `https://${pathname}${searchParams}`;
+    try{
+        const targetUrl = `https://${pathname}${searchParams}`;
     const headers = pickHeaders(request.headers, ["content-type", "authorization", "x-goog-api-client", "x-goog-api-key", "accept-encoding"]);
     const response = await fetch(targetUrl, {
         body: request.body,
@@ -54,6 +55,20 @@ export default async (request: Request, context: Context) => {
         headers: responseHeaders,
         status: response.status
     });
+    }
+    catch (error) {
+    console.error('Failed to fetch:', error);
+    return new Response(JSON.stringify({
+      error: 'Internal Server Error',
+      message: error.message
+    }), { 
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+    
     // }
     // else{
     //     return new Response('Unsupport URL!', {
