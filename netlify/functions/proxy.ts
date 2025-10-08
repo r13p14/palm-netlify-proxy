@@ -55,7 +55,7 @@ const queryString = url.search; // 包含 ? 和查询参数的部分，如果没
       headers: { 'Content-Type': 'text/html' }
     });
   }
-  const validPaths = ['api.groq.com', 'generativelanguage.googleapis.com'];
+  const validPaths = ['api.groq.com', 'generativelanguage.googleapis.com', 'api.cerebras.ai'];
   // pathname.includes('api.groq.com')
   if (validPaths.some(path => pathname.includes(path))) {
     // resetCountersIfNeeded();
