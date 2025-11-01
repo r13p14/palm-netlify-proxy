@@ -23,11 +23,15 @@ async function processResponse(response: Response): Promise<Response> {
   if (contentType?.includes('application/json')) {
     const jsonData = await response.json();
     
-    if (jsonData.choices && jsonData.choices[0]?.message?.content) {
-      const content = jsonData.choices[0].message.content;
-      const processedContent = content.replace(/<think>.*?<\/think>\s*/s, '').trim();
-      jsonData.choices[0].message.content = processedContent;
-    }
+if (jsonData.choices && jsonData.choices[0]?.message?.content) {
+    const originalContent = jsonData.choices[0].message.content;
+    const thinkMatch = originalContent.match(/<think>(.*?)<\/think>/s);
+    const reasoning_content = thinkMatch ? thinkMatch[1].trim() : '';
+    const processedContent = originalContent.replace(/<think>.*?<\/think>\s*/s, '').trim();
+    jsonData.choices[0].message.reasoning_content = reasoning_content;
+    jsonData.choices[0].message.content = processedContent;
+    // jsonData.choices[0].message.original_content = originalContent;
+  }
 
     return new Response(JSON.stringify(jsonData), {
       status: response.status,
@@ -109,6 +113,7 @@ const targetUrl = `https://${pathname}${queryString}`;
     for (const [key, value] of request.headers.entries()) {
       if (allowedHeaders.includes(key.toLowerCase())) {
         headers.set(key, value);
+        headers.set('accept-encoding': 'identity');
       }
     }
     // console.log(headers)
