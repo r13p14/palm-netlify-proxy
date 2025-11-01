@@ -113,7 +113,7 @@ const targetUrl = `https://${pathname}${queryString}`;
     for (const [key, value] of request.headers.entries()) {
       if (allowedHeaders.includes(key.toLowerCase())) {
         headers.set(key, value);
-        headers.set('accept-encoding': 'identity');
+        headers.set('accept-encoding', 'identity');
       }
     }
     // console.log(headers)
